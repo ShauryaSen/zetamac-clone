@@ -6,17 +6,10 @@ import {
   Text,
   Input,
   Button,
-  Stack,
   Container,
   Heading,
-  useToast,
   NumberInput,
   NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  Center,
-  Flex,
 } from '@chakra-ui/react'
 
 type TimeLimit = 30 | 60 | 120
@@ -37,7 +30,6 @@ function App() {
   const [answer, setAnswer] = useState('')
   const [maxNumber, setMaxNumber] = useState(100)
   const [operations, setOperations] = useState<Operation[]>(['+', '-', '*', '/'])
-  const toast = useToast()
 
   const generateProblem = useCallback(() => {
     const operation = operations[Math.floor(Math.random() * operations.length)]
@@ -110,6 +102,14 @@ function App() {
     setCurrentProblem(null)
   }
 
+  const resetGame = () => {
+    setIsPlaying(false)
+    setCurrentProblem(null)
+    setAnswer('')
+    setScore(0)
+    setTimeLeft(timeLimit)
+  }
+
   useEffect(() => {
     if (isPlaying && timeLeft > 0) {
       const timer = setInterval(() => {
@@ -122,26 +122,12 @@ function App() {
     }
   }, [isPlaying, timeLeft])
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && isPlaying) {
-      checkAnswer()
-    }
-  }
-
   const toggleOperation = (op: Operation) => {
     if (operations.includes(op)) {
       setOperations(operations.filter((o) => o !== op))
     } else {
       setOperations([...operations, op])
     }
-  }
-
-  const resetGame = () => {
-    setIsPlaying(false)
-    setCurrentProblem(null)
-    setAnswer('')
-    setScore(0)
-    setTimeLeft(timeLimit)
   }
 
   return (
