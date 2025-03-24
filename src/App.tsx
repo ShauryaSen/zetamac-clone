@@ -1,3 +1,4 @@
+// Zetamac Clone - A math practice game
 import { useState, useEffect, useCallback } from 'react'
 import {
   Box,
